@@ -13,7 +13,7 @@ public class Pessoa {
     //Empresa que constroi a casa (metodo construtor)
     public  Pessoa (String nome, String email){
 
-    //  this  se refere ao                nome se refere ao parametro
+    // this  se refere ao                nome se refere ao parametro
     // local da classe principal          recebido no metodo construtor;
         this.                            nome = nome;
         this.email = email;
