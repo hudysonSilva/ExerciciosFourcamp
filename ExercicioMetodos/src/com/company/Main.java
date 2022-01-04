@@ -16,7 +16,7 @@ public class Main {
 
         System.out.println("A+B:"+(a+b));
 
-        /*
+
         int [] vetor = {5,3,6,8,7};
 
 
@@ -48,7 +48,7 @@ public class Main {
 
         media2 = ajuda2.media ( );
         System.out.println(media2);
-        */
+
 
     }
 

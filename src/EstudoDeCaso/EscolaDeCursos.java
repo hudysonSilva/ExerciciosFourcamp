@@ -6,27 +6,24 @@ public class EscolaDeCursos {
 
     public static void main(String[] args) {
 
-
-
-        Pessoa novaPessoa = new Pessoa (lerString() ,lerString() );
+        //Variavel novaPessoa          Parametro(1), Parametro(2)
+        Pessoa novaPessoa = new Pessoa (lerString() ,lerString(), lerString());
 
         //com GET ele 'busca' o nome setado no objeto 'novaPessoa'
         System.out.println(novaPessoa.getNome());
 
         //Metodo Setter ou "SetNome" para o objeto 'novaPessoa'
         novaPessoa.setNome(lerString());
+        novaPessoa.setCurso("Inglês");
 
 
-
-
-
-
-        /*
-        String n1 = "a" , n2 = "b";
-
-        //CLICA NO BOTÂO CADASTRAR NOVA PESSOA para construir uma pessoa atraves do metodo construtor
-        Pessoa novaPessoa = new Pessoa (n1 ,n2 );
-        */
+    }
+    public static String lerString() {
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        return str;
+    }
+}
 
 // ========================= TO DO==================================
         //cadastro da secretaria
@@ -38,10 +35,3 @@ public class EscolaDeCursos {
         //
 //====================================================================
 
-    }
-    public static String lerString() {
-        Scanner scan = new Scanner(System.in);
-        String str = scan.nextLine();
-        return str;
-    }
-}

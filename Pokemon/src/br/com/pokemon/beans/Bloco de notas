@@ -1,0 +1,95 @@
+
+        /*
+        for(Tipo i : Tipo.values()){
+            int j = 0;
+            tipo[j] = i.toString();
+            j++;
+        }
+        for(int i=0; i <18;i++){
+            System.out.println(tipo[i]);
+        }
+         */
+
+        pokemon1.Squirtle();
+        System.out.println("ID:         "+pokemon1.idPokemon);
+        System.out.println("Nome:       "+pokemon1.nome);
+        System.out.println("Tipo:       "+pokemon1.tipo);
+        System.out.println("Nivel:      "+pokemon1.nivel);
+
+
+        /*
+        int idTreinador;        x
+        String nome;            x
+        int idade;              x
+        Insignia insignia;      x
+        Item item;              x
+        Pokedex pokedex;        x
+        Pokebola pokebola;      X
+        Pokemon pokemon;        X
+        Genero genero;          x
+
+
+        //O TREINADOR
+
+        Treinador treinador = new Treinador();
+
+        treinador.idTreinador = 1;
+        treinador.nome = "Raimundo Nonato";
+        treinador.idade = 65;
+
+        //SUAS INSIGNIAS
+        treinador.insignia = new Insignia();
+
+        treinador.insignia.insigniaId = treinador.idTreinador;
+        treinador.insignia.tipo = "pedra";
+        treinador.insignia.cidade= "osasco";
+        treinador.insignia.ginasio= "CelsoGiglio";
+
+        //SEUS ITENS
+        treinador.item = new Item();
+
+        treinador.item.idItem = treinador.idTreinador;
+        treinador.item.tipo = "Pokebola";
+        treinador.item.fruta = "maçã";
+
+        //SUA POKEDEX
+        treinador.pokedex = new Pokedex();
+
+        treinador.pokedex.idPokedex = treinador.idTreinador;
+        treinador.pokedex.quantidadePokemon = 1;
+
+        //SUA POKEBOLA
+        treinador.pokebola = new Pokebola();
+
+        treinador.pokebola.idPokebola = treinador.idTreinador;
+        treinador.pokebola.cheio = true;
+        treinador.pokebola.chanceDeCaptura = 0.6;
+
+        //SEU POKEMON
+
+        treinador.pokemon = new Pokemon();
+
+        String[] vetor = {"mordida","patada","cabeçada","xixi"};
+
+        treinador.pokemon.idPokemon = treinador.idTreinador;
+        treinador.pokemon.nivel = 100;
+        treinador.pokemon.nome = "Cachorro Caramelo";
+        treinador.pokemon.tipo = "Ground";
+        treinador.pokemon.genero = new Genero(); //inicializa o genero do pokemon desse treinado
+        treinador.pokemon.genero.genero = "f";
+        treinador.pokemon.ataque = vetor;
+
+
+        //SEU GENERO
+        treinador.genero = new Genero();
+
+        treinador.genero.genero = "m";
+        treinador.genero.idGenero = treinador.idTreinador;
+
+
+        System.out.println("Treinador :"+treinador.nome);
+        System.out.println("Pokemon :"+treinador.pokemon.nome);
+        System.out.println("Ataque favorito :"+treinador.pokemon.ataque[3]);
+
+        */
+
