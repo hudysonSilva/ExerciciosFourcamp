@@ -21,7 +21,7 @@ public class Main {
         Conta contaPoupanca = new ContaPoupanca();
         Conta conta = new Conta();
 
-//----------------------------------------------------------------------------------------------------------------------
+//----------------------------------MENU DO CLIENTE LOGADO -------------------------------------------------------------
 
 
         do {
@@ -148,14 +148,6 @@ public class Main {
                     }
 
                     if (conta.getCliente().getSenha() == senhaConfere) {
-                        /*
-                        System.out.println("       ============ MENU DO CLIENTE =============");
-                        System.out.println("        1 - Ver Saldo                            ");
-                        System.out.println("        2 - Depositar                            ");
-                        System.out.println("        3 - Transfeir                            ");
-                        System.out.println("       99 - Sair                                 ");
-                        System.out.println("       ==========================================");
-                         */
                         menuCliente(contaCorrente, contaPoupanca);
                     }
 
@@ -212,12 +204,11 @@ public class Main {
 
         opcao = utils.lerInteiro("Digite sua opção");
         switch (opcao) {
-            case 1: {
+            case  1: {
                 contaBo.consultaSaldo(contaCorrente, contaPoupanca);
 
-            }
-            break;
-            case 2: {
+            } break; //Saldo
+            case  2: {
                 System.out.println("===============================================================");
                 int idDeposito = utils.lerInteiro("Digite o id da conta que deseja depositar:");
                 double valor = utils.lerDouble("Digite o valor a ser depositado R$");
@@ -231,7 +222,7 @@ public class Main {
                     if (modalidadeConta < 1 || modalidadeConta > 2) {
                         System.out.println("opção invalidad digite novamente");
                     }
-                } while (modalidadeConta < 1 || modalidadeConta > 2);
+                } while (modalidadeConta != 1 || modalidadeConta != 2);
                 if (modalidadeConta == 1) {
                     contaCorrente = bancoDeDados.buscaContaCorrenteComId(idDeposito);
                     contaBo.depositoContaCorrente(contaCorrente, valor);
@@ -241,9 +232,8 @@ public class Main {
                 }
                 contaBo.consultaSaldo(contaCorrente, contaPoupanca);
                 System.out.println("===============================================================");
-            }
-            break;
-            case 3: {
+            } break; //Deposito
+            case  3: {
 //------------------------DEBITANDO TRANSFERENCIA OU DE CORRENTE OU DE POUPANCA ----------------------------------------
                 int idContaDestino = utils.lerInteiro("Digite o Numero da conta destino");
                 do {
@@ -251,10 +241,10 @@ public class Main {
                             "\n1 - Conta corrente" +
                             "\n2 - Conta Poupanca" +
                             "\nDigite uma opção:");
-                    if (opcao != 1 && opcao != 2) {
+                    if (opcao != 1 || opcao != 2) {
                         System.out.println("Opcao invalida Digite novamente...");
                     }
-                } while (opcao != 1 && opcao != 2);
+                } while (opcao != 1 || opcao != 2);
                 if (opcao1 == 1) {
                     contaRecebe = bancoDeDados.buscaContaCorrenteComId(idContaDestino);    //Se 1 conta destino corrente
                 } else {
@@ -267,7 +257,7 @@ public class Main {
                             "\n1 - Conta corrente" +
                             "\n2 - Conta Poupanca" +
                             "\nDigite uma opção:");
-                    if (opcao != 1 && opcao != 2) {
+                    if (opcao != 1 || opcao != 2) {
                         System.out.println("Opcao invalida Digite novamente...");
                     }
                 } while (opcao != 1 && opcao != 2);
@@ -280,17 +270,16 @@ public class Main {
 
 //----------------------------------------------------------------------------------------------------------------------
 
-            }
-            break;
-            case 4: {
+            } break; //Transferencia
+            case  4: {
                 menuPix(contaCorrente, contaPoupanca);
-            }
-            break;
+            } break; //Pix
+            case  5: {
+                System.out.println("DLC em construção");
+            } break; //Cartões
             case 99: {
                 System.out.println("Vlw por usar o NEXT");
-            }
-            break;
-
+            } break; //sair
         }
         }while (opcao != 99);
 //----------------------------------------------------------------------------------------------------------------------
@@ -332,7 +321,7 @@ public class Main {
         }
 
 
-    }
+    }//Realizar pix não funfa ainda
 
     public static void menuCadastraPix(Conta contaCorrente, Pix pix) {
         Menu menu = new Menu();
@@ -384,6 +373,78 @@ public class Main {
 
                 }
                 break;
+
+            }
+        }while (opcao != 99);
+
+    } //100%
+
+    public static void menuCartoes(Conta conta){
+        int opcao = -1;
+        Utils utils = new Utils();
+        Cartao cartao[] = new  Cartao[2];
+        ContaBo contaBo = new ContaBo();
+
+        do {
+            System.out.println("==============Menu Cartoes==============");
+            System.out.println(" 1 - extrato credito                     ");
+            System.out.println(" 2 - extrato debito                      ");
+            System.out.println(" 3 - Solicitar cartão                    ");
+            System.out.println("99 - Sair                                ");
+
+            switch (opcao){
+                case  1:{
+                    System.out.println("Aqui é só por as tranzaçoes numa array e varrer ela com for dando sysout");
+                } break;
+                case  2:{
+                    System.out.println("Aqui é só por as tranzaçoes numa array e varrer ela com for dando sysout tambem");
+
+                } break;
+                case  3:{
+                    //"Aqui tu vai criar um objeto cartão e colocar ele dentro do objeto conta q ta logado no sistema" +
+                    //"com 3 opções solicitar catão de credito, debito e ou ambos");
+                    do {
+                        opcao = utils.lerInteiro("Solicite seu cartão" +
+                                "\n 1 - Debito" +
+                                "\n 2 - Credito" +
+                                "\n 3 - Ambos" +
+                                "\n Digite sua opção:");
+
+                        int senha;
+                        do {
+                            senha = utils.lerInteiro("Digite uma senha de 4 digitos");
+                            if (senha < 1000 || senha > 9999) {
+                                System.out.println("Senha invalida digite novamente");
+                            }
+                        } while (senha < 1000 || senha > 9999);
+
+                        if (opcao == 1) {
+                            Cartao cartaoDeDebito = new CartaoDeDebito();
+                            contaBo.solicitaCartao(senha, conta, cartaoDeDebito, 1);
+
+
+
+                        } else if (opcao == 2) {
+                            if(conta.getCartao() == null) {
+                                conta.setCartao(cartao[2]);
+                            }
+                            Cartao cartaoDeCredito = new CartaoDeCredito();
+
+
+                        } else if (opcao == 3) {
+                            Cartao cartaoDeDebito  = new CartaoDeDebito();
+                            Cartao cartaoDeCredito = new CartaoDeCredito();
+
+
+                        } else {
+                            System.out.println("Opção invalida digite novamente.");
+                        }
+                    }while (opcao <1 || opcao >3);
+
+                } break;
+                case  99:{
+                    System.out.println("Vazando !!");
+                } break;  //Sair 100% funcionando
 
             }
         }while (opcao != 99);

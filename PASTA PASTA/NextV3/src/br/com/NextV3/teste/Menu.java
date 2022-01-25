@@ -20,6 +20,7 @@ public class Menu {
         System.out.println("        2 - Depositar                            ");
         System.out.println("        3 - Transfeir                            ");
         System.out.println("        4 - Pix                                  ");
+        System.out.println("        5 - Solicitar cartão                     ");
         System.out.println("       99 - Sair                                 ");
         System.out.println("       ==========================================");
 
@@ -33,7 +34,7 @@ public class Menu {
 
     }
     public void menuCadastraPix(){
-        System.out.println("==========Menu PIX ==============");
+        System.out.println("==========Cadastrar chave PIX ==============");
         System.out.println(" 1 - Chave CPF ");
         System.out.println(" 2 - Chave EMAIL");
         System.out.println(" 3 - Chave TELEFONE");
