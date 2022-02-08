@@ -12,7 +12,6 @@ public class Menu {
         System.out.println("|99 - Sair                           |");
         System.out.println("=====================================");
     }
-
     public void menuDoCliente() {
 
         System.out.println("       ============ MENU DO CLIENTE =============");
@@ -20,7 +19,8 @@ public class Menu {
         System.out.println("        2 - Depositar                            ");
         System.out.println("        3 - Transfeir                            ");
         System.out.println("        4 - Pix                                  ");
-        System.out.println("        5 - Solicitar cartão                     ");
+        System.out.println("        5 - Menu de Cartões                      ");
+        System.out.println("        6 - Menu de testes ");
         System.out.println("       99 - Sair                                 ");
         System.out.println("       ==========================================");
 
@@ -41,6 +41,23 @@ public class Menu {
         System.out.println(" 4 - Chave Aleatoria");
         System.out.println("99 - Sair");
         System.out.println("=================================");
+
+
+    }
+    public void menuDeCartoes(){
+        System.out.println("==============Menu Cartoes==============");
+        /*
+        if (cartao != null){
+            //foreach cartao sout cartao
+        }
+        */
+        System.out.println("  1 - Extrato cartão de credito");
+        System.out.println("  2 - Solicitar cartão de debito");
+        System.out.println("  3 - Solicitar cartão");
+        System.out.println(" 99 - Sair");
+        System.out.println("========================================");
+
+
 
 
     }

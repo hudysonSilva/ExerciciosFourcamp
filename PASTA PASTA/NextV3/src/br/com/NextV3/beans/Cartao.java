@@ -1,11 +1,32 @@
 package br.com.NextV3.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cartao {
     private int id;
     private String numero;
     private String bandeira;
     private int senha;
     private boolean isAtivo;
+    private ArrayList<Double> fatura;
+    private Conta conta;
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
+    }
+
+    public List<Double> getFatura() {
+        return fatura;
+    }
+
+    public void setFatura(ArrayList<Double> fatura) {
+        this.fatura = fatura;
+    }
 
     public int getId() {
         return id;

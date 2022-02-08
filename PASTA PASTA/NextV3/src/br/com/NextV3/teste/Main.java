@@ -11,6 +11,7 @@ import java.util.UUID;
 public class Main {
     public static void main(String[] args) {
 
+
         int opcao = -1;
 //-----------------------------------------------OBJETOS E METODOS------------------------------------------------------
 
@@ -20,6 +21,52 @@ public class Main {
         Conta contaCorrente = new ContaCorrente();
         Conta contaPoupanca = new ContaPoupanca();
         Conta conta = new Conta();
+        Endereco endereco = new Endereco();
+        EnderecoBo enderecoBo = new EnderecoBo();
+        Cliente cliente = new Cliente();
+        ClienteBo clienteBo = new ClienteBo();
+
+
+//----------------------------------------------------------------------------------------------------------------------
+        {
+            int teste = 1;
+            if (teste == 1) {
+                //Cliente Hudyson Pre cadastrado
+                int idCliente = bancoDeDados.autoIncrementoConta();
+                Endereco endereco1 = enderecoBo.cadastraEndereco("06330-111", "SP", "Osasco", "Helena maria", "Rua dos Bobos", 10);
+                Cliente cliente1 = clienteBo.cadastraCliente(idCliente, "Hudyson Silva", "12312312311", "26/07/1994", endereco, 1234);
+                Conta conta1 = new ContaCorrente();
+                conta1 = contaBo.cadastraConta(conta1, cliente1, ModalidadeConta.CORRENTE);
+                Conta conta2 = new ContaPoupanca();
+                conta2 = contaBo.cadastraConta(conta2, cliente, ModalidadeConta.POUPANCA);
+                BancoDeDados.novoCliente(idCliente, conta1, conta2, cliente1);
+                CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
+                CartaoDeDebito cartaoDeDebito = new CartaoDeDebito();
+                contaBo.solicitaCartaoDeDebito(cartaoDeDebito,"MsterCard",1234,conta1);
+                contaBo.solicitaCartaoDeCredito(cartaoDeCredito,"MasterCard",2000,1234,conta1);
+            }
+
+            if (teste == 1) {
+
+                //Cliente Bruna Vieira
+                int idCliente = bancoDeDados.autoIncrementoConta();
+                Endereco endereco1 = enderecoBo.cadastraEndereco("06330-111", "SP", "São Paulo", "Jaguaré", "Rua 1", 10);
+                Cliente cliente1 = clienteBo.cadastraCliente(idCliente, "Bruna Vieira", "12312312322", "13/07/1994", endereco, 1234);
+                Conta conta1 = new ContaCorrente();
+                conta1 = contaBo.cadastraConta(conta1, cliente1, ModalidadeConta.CORRENTE);
+                Conta conta2 = new ContaPoupanca();
+                conta2 = contaBo.cadastraConta(conta2, cliente, ModalidadeConta.POUPANCA);
+                BancoDeDados.novoCliente(idCliente, conta1, conta2, cliente1);
+                CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
+                CartaoDeDebito cartaoDeDebito = new CartaoDeDebito();
+                contaBo.solicitaCartaoDeDebito(cartaoDeDebito,"MsterCard",1234,conta1);
+                contaBo.solicitaCartaoDeCredito(cartaoDeCredito,"MasterCard",2000,1234,conta1);
+            }
+        }
+//----------------------------------------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------------------------------------------
+
 
 //----------------------------------MENU DO CLIENTE LOGADO -------------------------------------------------------------
 
@@ -35,8 +82,8 @@ public class Main {
             switch (opcao) {
                 case 1: {
                     System.out.println("=======================DADOS DE ENDERECO=======================");
-                    Endereco endereco = new Endereco();           //Objeto
-                    EnderecoBo enderecoBo = new EnderecoBo();     //Metodo que preenche o objeto acima
+                    endereco = new Endereco();           //Objeto
+                    enderecoBo = new EnderecoBo();     //Metodo que preenche o objeto acima
 
                     String cep = utils.lerSring("Digite seu Cep:");
                     String uf = utils.lerSring("Digite seu UF:");
@@ -71,8 +118,8 @@ public class Main {
                         }
                     } while (senha < 1000 || senha > 9999);
 
-                    Cliente cliente = new Cliente();       //Objeto
-                    ClienteBo clienteBo = new ClienteBo();      //Metodo que preenche objeto acima
+                    cliente = new Cliente();       //Objeto
+                    clienteBo = new ClienteBo();      //Metodo que preenche objeto acima
 
                     cliente = clienteBo.cadastraCliente(idCliente, cpf, nome, dataDeNascimento, endereco, senha);
                     System.out.println("===============================================================");
@@ -96,8 +143,11 @@ public class Main {
                         contaCorrente = contaBo.cadastraConta(contaCorrente, cliente, ModalidadeConta.CORRENTE);
                         contaPoupanca = null;
                         BancoDeDados.novoCliente(idCliente, contaCorrente, contaPoupanca, cliente);
+                        Pix pix = new Pix();
+                        contaCorrente.setPix(pix);
 
-                    } else if (modalidadeConta == 2) {
+                    }
+                    else if (modalidadeConta == 2) {
 
                         contaCorrente = null;
                         contaPoupanca = contaBo.cadastraConta(contaPoupanca, cliente, ModalidadeConta.POUPANCA);
@@ -108,7 +158,10 @@ public class Main {
                         contaCorrente = contaBo.cadastraConta(contaCorrente, cliente, ModalidadeConta.CORRENTE);
                         contaPoupanca = contaBo.cadastraConta(contaPoupanca, cliente, ModalidadeConta.POUPANCA);
                         BancoDeDados.novoCliente(idCliente, contaCorrente, contaPoupanca, cliente);
+                        Pix pix = new Pix();
+                        contaCorrente.setPix(pix);
                     }
+
                     System.out.println("===============================================================");
 
 
@@ -199,126 +252,125 @@ public class Main {
         Menu menu = new Menu();
         int opcao = -1;
 //-----------------------------------------MENU NO METODO---------------------------------------------------------------
-        do{
-        menu.menuDoCliente();
+        do {
+            menu.menuDoCliente();
 
-        opcao = utils.lerInteiro("Digite sua opção");
-        switch (opcao) {
-            case  1: {
-                contaBo.consultaSaldo(contaCorrente, contaPoupanca);
+            opcao = utils.lerInteiro("Digite sua opção");
+            switch (opcao) {
+                case 1: {
+                    contaBo.consultaSaldo(contaCorrente, contaPoupanca);
 
-            } break; //Saldo
-            case  2: {
-                System.out.println("===============================================================");
-                int idDeposito = utils.lerInteiro("Digite o id da conta que deseja depositar:");
-                double valor = utils.lerDouble("Digite o valor a ser depositado R$");
-
-                int modalidadeConta = -1;
-                do {
-                    modalidadeConta = utils.lerInteiro("Qual a modalidade da conta" +
-                            "\n1 - Corrente" +
-                            "\n2 - Poupanca" +
-                            "\nDigite a opção:");
-                    if (modalidadeConta < 1 || modalidadeConta > 2) {
-                        System.out.println("opção invalidad digite novamente");
-                    }
-                } while (modalidadeConta != 1 || modalidadeConta != 2);
-                if (modalidadeConta == 1) {
-                    contaCorrente = bancoDeDados.buscaContaCorrenteComId(idDeposito);
-                    contaBo.depositoContaCorrente(contaCorrente, valor);
-                } else {
-                    contaPoupanca = bancoDeDados.buscaContaPoupancaComId(idDeposito);
-                    contaBo.depositoContaPoupanca(contaPoupanca, valor);
                 }
-                contaBo.consultaSaldo(contaCorrente, contaPoupanca);
-                System.out.println("===============================================================");
-            } break; //Deposito
-            case  3: {
+                break; //Saldo
+                case 2: {
+                    System.out.println("===============================================================");
+                    int idDeposito = utils.lerInteiro("Digite o id da conta que deseja depositar:");
+                    double valor = utils.lerDouble("Digite o valor a ser depositado R$");
+
+                    int modalidadeConta = -1;
+                    do {
+                        modalidadeConta = utils.lerInteiro("Qual a modalidade da conta" +
+                                "\n1 - Corrente" +
+                                "\n2 - Poupanca" +
+                                "\nDigite a opção:");
+                        if (modalidadeConta < 1 || modalidadeConta > 2) {
+                            System.out.println("opção invalidad digite novamente");
+                        }
+                    } while (modalidadeConta < 1 || modalidadeConta > 2);
+                    if (modalidadeConta == 1) {
+                        contaCorrente = bancoDeDados.buscaContaCorrenteComId(idDeposito);
+                        contaBo.depositoContaCorrente(contaCorrente, valor);
+                    } else {
+                        contaPoupanca = bancoDeDados.buscaContaPoupancaComId(idDeposito);
+                        contaBo.depositoContaPoupanca(contaPoupanca, valor);
+                    }
+                    contaBo.consultaSaldo(contaCorrente, contaPoupanca);
+                    System.out.println("===============================================================");
+                }
+                break; //Deposito
+                case 3: {
 //------------------------DEBITANDO TRANSFERENCIA OU DE CORRENTE OU DE POUPANCA ----------------------------------------
-                int idContaDestino = utils.lerInteiro("Digite o Numero da conta destino");
-                do {
-                    opcao1 = utils.lerInteiro("Qual a modalidade da conta destino?" +
-                            "\n1 - Conta corrente" +
-                            "\n2 - Conta Poupanca" +
-                            "\nDigite uma opção:");
-                    if (opcao != 1 || opcao != 2) {
-                        System.out.println("Opcao invalida Digite novamente...");
+                    int idContaDestino = utils.lerInteiro("Digite o Numero da conta destino");
+                    do {
+                        opcao1 = utils.lerInteiro("Qual a modalidade da conta destino?" +
+                                "\n1 - Conta corrente" +
+                                "\n2 - Conta Poupanca" +
+                                "\nDigite uma opção:");
+                        if (opcao != 1 || opcao != 2) {
+                            System.out.println("Opcao invalida Digite novamente...");
+                        }
+                    } while (opcao != 1 || opcao != 2);
+                    if (opcao1 == 1) {
+                        contaRecebe = bancoDeDados.buscaContaCorrenteComId(idContaDestino);    //Se 1 conta destino corrente
+                    } else {
+                        contaRecebe = bancoDeDados.buscaContaPoupancaComId(idContaDestino);    //Se 2 conta destino poupanca
                     }
-                } while (opcao != 1 || opcao != 2);
-                if (opcao1 == 1) {
-                    contaRecebe = bancoDeDados.buscaContaCorrenteComId(idContaDestino);    //Se 1 conta destino corrente
-                } else {
-                    contaRecebe = bancoDeDados.buscaContaPoupancaComId(idContaDestino);    //Se 2 conta destino poupanca
-                }
 
-                Double valor = utils.lerDouble("Digite o valor da Transferencia R$");
-                do {
-                    opcao = utils.lerInteiro("Debitar o valor de" +
-                            "\n1 - Conta corrente" +
-                            "\n2 - Conta Poupanca" +
-                            "\nDigite uma opção:");
-                    if (opcao != 1 || opcao != 2) {
-                        System.out.println("Opcao invalida Digite novamente...");
+                    Double valor = utils.lerDouble("Digite o valor da Transferencia R$");
+                    do {
+                        opcao = utils.lerInteiro("Debitar o valor de" +
+                                "\n1 - Conta corrente" +
+                                "\n2 - Conta Poupanca" +
+                                "\nDigite uma opção:");
+                        if (opcao != 1 || opcao != 2) {
+                            System.out.println("Opcao invalida Digite novamente...");
+                        }
+                    } while (opcao != 1 && opcao != 2);
+
+                    if (opcao == 1) {
+                        contaBo.transferencia(contaCorrente, contaRecebe, valor);
+                    } else {
+                        contaBo.transferencia(contaPoupanca, contaRecebe, valor);
                     }
-                } while (opcao != 1 && opcao != 2);
-
-                if (opcao == 1) {
-                    contaBo.transferencia(contaCorrente, contaRecebe, valor);
-                } else {
-                    contaBo.transferencia(contaPoupanca, contaRecebe, valor);
-                }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-            } break; //Transferencia
-            case  4: {
-                menuPix(contaCorrente, contaPoupanca);
-            } break; //Pix
-            case  5: {
-                System.out.println("DLC em construção");
-            } break; //Cartões
-            case 99: {
-                System.out.println("Vlw por usar o NEXT");
-            } break; //sair
-        }
-        }while (opcao != 99);
+                }
+                break; //Transferencia
+                case 4: {
+                    menuPix(contaCorrente, contaPoupanca);
+                }
+                break; //Pix
+                case 5: {
+                    menuCartoes(contaCorrente);
+                }
+                break; //Cartões
+                case 99: {
+                    System.out.println("Vlw por usar o NEXT");
+                }
+                break; //sair
+            }
+        } while (opcao != 99);
 //----------------------------------------------------------------------------------------------------------------------
 
     }
 
     public static void menuPix(Conta contaCorrente, Conta contaPoupanca) {
         Menu menu = new Menu();
-        Pix pix = new Pix();
-        contaCorrente.setPix(pix);
         TipoChavePix tipoChavePix;
         ContaBo contaBo = new ContaBo();
         BancoDeDados bancoDeDados = new BancoDeDados();
         Utils utils = new Utils();
         int opcao = -1;
+        do {
+            menu.menuPix();
+            opcao = utils.lerInteiro("Digite sua opção:");
 
-        menu.menuPix();
-        System.out.println("==========Menu PIX ==============");
-        System.out.println(" 1 - Cadastrar Pix");
-        System.out.println(" 2 - Realizar Pix");
-        System.out.println("99 - Sair");
-        System.out.println("=================================");
-        opcao = utils.lerInteiro("Digite sua opção:");
+            switch (opcao) {
+                case 1: {
+                }
+                break;
+                case 2: {
+                    System.out.println("DLC chega em breve");
+                }
+                break;
+                case 99: {
+                    System.out.println("Meu nome é fui");
+                }
+                break;
 
-        switch (opcao) {
-            case 1: {
-                menuCadastraPix(contaCorrente, pix);
             }
-            break;
-            case 2: {
-                System.out.println("DLC chega em breve");
-            }
-            break;
-            case 99: {
-                System.out.println("Meu nome é fui");
-            }
-            break;
-
-        }
+        }while (opcao != 99);
 
 
     }//Realizar pix não funfa ainda
@@ -339,34 +391,14 @@ public class Main {
 
             switch (opcao) {
                 case 1: {
-                    do {
-                        conteudoPix = utils.lerSring("Digite seu CPF:");
-                        if (conteudoPix.length() != 11 || !conteudoPix.matches("[0-9]*")) {
-                            System.out.println("CPF invalido digite novamente");
-                        }
-                    } while (conteudoPix.length() != 11 || !conteudoPix.matches("[0-9]*"));
-                    contaCorrente = contaBo.cadastroPixContaCorrente(opcao-1, contaCorrente, conteudoPix);
 
                 }
                 break;
-                case 2: {
-                    conteudoPix = utils.lerSring("Digite seu Email :");
-                    contaCorrente = contaBo.cadastroPixContaCorrente(opcao-1, contaCorrente, conteudoPix);
-
-                }
+                case 2: {}
                 break;
-                case 3: {
-                    conteudoPix = utils.lerSring("Digite seu Celular :");
-                    contaCorrente = contaBo.cadastroPixContaCorrente(opcao-1, contaCorrente, conteudoPix);
-
-                }
+                case 3: {}
                 break;
-                case 4: {
-                    conteudoPix = UUID.randomUUID().toString();
-                    contaCorrente = contaBo.cadastroPixContaCorrente(opcao-1, contaCorrente, conteudoPix);
-                    System.out.println("Seu pix aleatorio é :" + contaCorrente.getPix().getConteudoChavePix()[opcao-1]);
-
-                }
+                case 4: {}
                 break;
                 case 99: {
                     System.out.println("eu ja saí");
@@ -375,79 +407,126 @@ public class Main {
                 break;
 
             }
-        }while (opcao != 99);
+        } while (opcao != 99);
 
     } //100%
 
-    public static void menuCartoes(Conta conta){
+    public static void menuCartoes(Conta conta) {
         int opcao = -1;
         Utils utils = new Utils();
-        Cartao cartao[] = new  Cartao[2];
+        Cartao cartao[] = new Cartao[2];
         ContaBo contaBo = new ContaBo();
 
         do {
             System.out.println("==============Menu Cartoes==============");
+            if (cartao[0] != null || cartao[1] != null) {
+                System.out.println("╔============================================╗");
+                System.out.println("║                                     ┌─┬─┐  ║");
+                System.out.println("║                                     ├┼┴┼┤  ║");
+                System.out.println("║                                     └┴─┴┘  ║");
+                System.out.println("║                                            ║");
+                System.out.println("║                                            ║");
+                System.out.println("║NOME:"+conta.getCliente().getNome()+" NUMERO:" + cartao);
+                System.out.println("║                                   ┌────┐   ║");
+                System.out.println("║                                   │VISA│   ║");
+                System.out.println("║                                   └────┘   ║");
+                System.out.println("╚============================================╝");
+            }
+
+
+
             System.out.println(" 1 - extrato credito                     ");
             System.out.println(" 2 - extrato debito                      ");
             System.out.println(" 3 - Solicitar cartão                    ");
+            System.out.println(" 4 - Meus cartoes                        ");
             System.out.println("99 - Sair                                ");
+            opcao = utils.lerInteiro("Digite sua opção :");
 
-            switch (opcao){
-                case  1:{
+            switch (opcao) {
+                case 1: {
                     System.out.println("Aqui é só por as tranzaçoes numa array e varrer ela com for dando sysout");
-                } break;
-                case  2:{
+                }
+                break;
+                case 2: {
                     System.out.println("Aqui é só por as tranzaçoes numa array e varrer ela com for dando sysout tambem");
 
-                } break;
-                case  3:{
-                    //"Aqui tu vai criar um objeto cartão e colocar ele dentro do objeto conta q ta logado no sistema" +
-                    //"com 3 opções solicitar catão de credito, debito e ou ambos");
-                    do {
-                        opcao = utils.lerInteiro("Solicite seu cartão" +
-                                "\n 1 - Debito" +
-                                "\n 2 - Credito" +
-                                "\n 3 - Ambos" +
-                                "\n Digite sua opção:");
+                }
+                break;
+                case 3: {
+                    opcao = utils.lerInteiro("Qual tipo de cartao deseja solicitar " +
+                            "\n1 - Cartao de debito" +
+                            "\n2 - Cartao de Credito" +
+                            "\n3 - Solicitar Ambos" +
+                            "\nDigite sua opção:");
 
-                        int senha;
-                        do {
-                            senha = utils.lerInteiro("Digite uma senha de 4 digitos");
-                            if (senha < 1000 || senha > 9999) {
-                                System.out.println("Senha invalida digite novamente");
-                            }
-                        } while (senha < 1000 || senha > 9999);
+                    if (opcao == 1) {
+                        CartaoDeDebito cartaoDeDebito = new CartaoDeDebito();
+                        String bandeira = utils.lerSring("Digite a bandeira desejada:");
+                        int senha = utils.lerInteiro("Digite  uma senha de 4 digitos:");
 
-                        if (opcao == 1) {
-                            Cartao cartaoDeDebito = new CartaoDeDebito();
-                            contaBo.solicitaCartao(senha, conta, cartaoDeDebito, 1);
+                        contaBo.solicitaCartaoDeDebito(cartaoDeDebito, bandeira, senha, conta);
+
+                    } else if (opcao == 2) {
+                        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
+                        String bandeira = utils.lerSring("Digite a bandeira desejada:");
+                        int senha = utils.lerInteiro("Digite  uma senha de 4 digitos:");
+                        double renda = utils.lerDouble("Digite sua renda:");
+
+                        contaBo.solicitaCartaoDeCredito(cartaoDeCredito, bandeira, renda, senha, conta);
+                    } else if (opcao == 3) {
+                        System.out.println("============== DADOS DO CARTAO DE DEBITO ==============");
+                        CartaoDeDebito cartaoDeDebito = new CartaoDeDebito();
+                        String bandeira = utils.lerSring("Digite a bandeira desejada:");
+                        int senha = utils.lerInteiro("Digite  uma senha de 4 digitos:");
+
+                        contaBo.solicitaCartaoDeDebito(cartaoDeDebito, bandeira, senha, conta);
+                        System.out.println("cartão de debito criado com sucesso");
+                        System.out.println("=======================================================");
+
+                        System.out.println("============== DADOS DO CARTAO DE CREDITO ==============");
+
+                        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
+                         bandeira = utils.lerSring("Digite a bandeira desejada:");
+                         senha = utils.lerInteiro("Digite  uma senha de 4 digitos:");
+                        double renda = utils.lerDouble("Digite sua renda:");
+
+                        contaBo.solicitaCartaoDeCredito(cartaoDeCredito, bandeira, renda, senha, conta);
+                        System.out.println("Cartão de credito criado com sucesso");
+                        System.out.println("========================================================");
 
 
-
-                        } else if (opcao == 2) {
-                            if(conta.getCartao() == null) {
-                                conta.setCartao(cartao[2]);
-                            }
-                            Cartao cartaoDeCredito = new CartaoDeCredito();
-
-
-                        } else if (opcao == 3) {
-                            Cartao cartaoDeDebito  = new CartaoDeDebito();
-                            Cartao cartaoDeCredito = new CartaoDeCredito();
-
-
-                        } else {
-                            System.out.println("Opção invalida digite novamente.");
-                        }
-                    }while (opcao <1 || opcao >3);
-
-                } break;
-                case  99:{
+                    }
+                }
+                break; //cadastro de cartoes credito e debito
+                case 4: {
+                    BancoDeDados bancoDeDados = new BancoDeDados();
+                    Cartao cartaoC = bancoDeDados.buscaCartaoDeCreditoPorConta((conta));
+                    CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
+                   MenuDeTestes((CartaoDeCredito) cartaoC);
+                }
+                break;
+                case 99: {
                     System.out.println("Vazando !!");
-                } break;  //Sair 100% funcionando
+                }
+                break;  //Sair 100% funcionando
 
             }
-        }while (opcao != 99);
+            break;
+        } while (opcao != 99);
+
+    }
+
+    public static void MenuDeTestes(CartaoDeCredito cartaoDeCredito) {
+        Utils utils = new Utils();
+        int opcao = -1;
+        System.out.println("Fazer compra com cartão" +
+                "1 - Compra de teste");
+        double valor = utils.lerDouble("Digite valor da compra :");
+
+        if (opcao == 1) {
+            System.out.println("Viagem no tempo Pro futuro");
+        }
+
 
     }
 }

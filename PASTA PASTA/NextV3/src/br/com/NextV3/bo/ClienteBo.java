@@ -11,6 +11,7 @@ public class ClienteBo {
     public Cliente cadastraCliente(int idCliente,String nome, String cpf, String dataDeNascimento,Endereco endereco, int senha) {
 
         Cliente cliente = new Cliente();
+
         cliente.setNome(nome);
         cliente.setCpf(cpf);
         cliente.setEndereco(endereco);

@@ -2,8 +2,10 @@ package br.com.NextV3.bo;
 
 
 import br.com.NextV3.beans.*;
+import br.com.NextV3.teste.BancoDeDados;
 
 import java.sql.Struct;
+import java.util.List;
 import java.util.UUID;
 
 public class ContaBo {
@@ -59,21 +61,8 @@ public class ContaBo {
         }
 
     }
-    public Conta   cadastroPixContaCorrente (int tipoChavePix, Conta conta, String conteudoChavePix){
-        String conteudoChavePixNovo[] = new String[4];
-
-        conteudoChavePixNovo[tipoChavePix] = conteudoChavePix;
-
-        Pix pix = conta.getPix();
-        pix.setIdPix(conta.getIdConta());
-        pix.setConteudoChavePix(conteudoChavePixNovo);
-
-        conta.setPix(pix);
 
 
-
-        return conta;
-    }
     public void    consultaSaldo(Conta contaCorrente,Conta contaPoupanca){
 
         if      (contaPoupanca == null && contaCorrente != null){
@@ -98,66 +87,40 @@ public class ContaBo {
 
         return true;
     }
+//----------------------------------------------------------------------------------------------------------------------
 
-    public Boolean solicitaCartao(int senha, Conta conta, Cartao cartaoCD, int opcao){
-        Cartao cartao[] = new Cartao[2];
-        if(conta.getCartao() == null) {
-            conta.setCartao(cartao[2]);
-        }
+    public Cartao solicitaCartaoDeDebito(CartaoDeDebito cartaoDeDebito, String bandeira, int senha,Conta conta) {
 
-        if (opcao == 1) {
-            cartao[2] = conta.getCartao();
-            cartao[0] = new CartaoDeDebito();
-            cartao[0] = cadastraCartaoDebito(senha,conta,cartao[0]);
+        cartaoDeDebito.setAtivo(true);
+        cartaoDeDebito.setBandeira(bandeira);
+        cartaoDeDebito.setSenha(senha);
+        cartaoDeDebito.setId(conta.getIdConta());
+        cartaoDeDebito.setNumero(UUID.randomUUID().toString()/*autoincremento*/);
+        cartaoDeDebito.setLimiteDeTranzaçoes(1000);//MUDAR PARA SER POR TIPO DE CLIENTE
+        cartaoDeDebito.setConta(conta);
 
-            conta.setCartao(cartao[2]);
-        }
+        int id = conta.getIdConta();
 
-        else if(opcao == 2){
-            cartao[2] = conta.getCartao();
-            cartao[1] = new CartaoDeDebito();
-            cartao[1] = cadastraCartaoDebito(senha,conta,cartao[1]);
 
-            conta.setCartao(cartao[2]);
-        }
+        BancoDeDados.adicionaCartaoDeDebito(cartaoDeDebito, id);
 
-        else if(opcao == 3){
-            cartao[2] = conta.getCartao();
-            cartao[0] = new CartaoDeDebito();
-            cartao[0] = cadastraCartaoDebito(senha,conta,cartao[0]);
-
-            cartao[2] = conta.getCartao();
-            cartao[1] = new CartaoDeDebito();
-            cartao[1] = cadastraCartaoDebito(senha,conta,cartao[1]);
-
-            //isso 2 é  "O Vetor inteiro"  0 e 1 são indices
-            conta.setCartao(cartao[2]);
-        }
-
-        return true;
+        return cartaoDeDebito;
     }
-//------------------------------------NAO SETADO LIMITE DE NADA---------------------------------------------------------
-    public Cartao cadastraCartaoDebito(int senha, Conta conta,Cartao cartao){
+    public Cartao solicitaCartaoDeCredito(CartaoDeCredito cartaoDeCredito, String bandeira, double renda, int senha,Conta conta) {
 
-        cartao.setBandeira("Elo,Visa,Master,ETC");
-        cartao.setNumero(UUID.randomUUID().toString());
-        cartao.setSenha(senha);
-        cartao.setId(conta.getIdConta());
-        cartao.setAtivo(true);
+        cartaoDeCredito.setAtivo(true);
+        cartaoDeCredito.setBandeira(bandeira);
+        cartaoDeCredito.setSenha(senha);
+        cartaoDeCredito.setId(conta.getIdConta());
+        cartaoDeCredito.setNumero(UUID.randomUUID().toString()/*autoincremento*/);
+        cartaoDeCredito.setLimite(renda*1.10);//MUDAR PARA SER POR TIPO DE CLIENTE
+        cartaoDeCredito.setConta(conta);
 
+        int id = conta.getIdConta();
 
-        return cartao;
-    }
-    public Cartao cadastraCartaoCredito(int senha, Conta conta,Cartao cartao){
+        BancoDeDados.adicionaCartaoDeCredito(cartaoDeCredito,id);
 
-        cartao.setBandeira("Elo,Visa,Master,ETC");
-        cartao.setNumero(UUID.randomUUID().toString());
-        cartao.setSenha(senha);
-        cartao.setId(conta.getIdConta());
-        cartao.setAtivo(true);
-
-
-        return cartao;
+        return cartaoDeCredito;
     }
 //----------------------------------------------------------------------------------------------------------------------
 //------------------------------------DESATIVAR CARTAO------------------------------------------------------------------
@@ -188,6 +151,10 @@ public class ContaBo {
         return true;
     }
 //----------------------------------------------------------------------------------------------------------------------
+    public boolean TestecompraCredito(CartaoDeCredito cartaoDeCredito,double valor){
+        cartaoDeCredito.getConta().setSaldo(cartaoDeCredito.getConta().getSaldo()-valor);
+        return true;
+    }
 //----------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------

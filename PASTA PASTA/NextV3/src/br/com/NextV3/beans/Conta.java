@@ -1,6 +1,9 @@
 package br.com.NextV3.beans;
 
+import br.com.NextV3.teste.Pix;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Conta {
 
@@ -11,16 +14,6 @@ public class Conta {
     private Cliente cliente;
     private ModalidadeConta modalidadeConta;
     private Pix pix;
-    private Cartao cartao[] = new Cartao[2];
-    //private static ArrayList<Cartao> ListaDeCartoes             = new ArrayList<>();
-
-    public Cartao getCartao() {
-        return cartao[2];
-    }
-
-    public void setCartao(Cartao cartao) {
-        this.cartao[2] = cartao;
-    }
 
     public Pix getPix() {
         return pix;

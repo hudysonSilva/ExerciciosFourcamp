@@ -23,4 +23,5 @@ public class Utils {
         double dbl = scan.nextDouble();
         return dbl;
     }
+
 }
